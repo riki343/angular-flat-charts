@@ -9,10 +9,12 @@
     <script src="../src/angular-flat-charts.js"></script>
     <script src="../demo/app.js"></script>
 </head>
-<body ng-controller="DemoController">
+<body>
     <div class="row" style="margin-top: 100px;">
         <div class="col-md-offset-4 col-md-4 col-xs-offset-3 col-xs-6">
-            <flat-chart width="400" height="250" chart-data="data" color="whitesmoke"></flat-chart>
+            <div ng-controller="DemoController">
+                <flat-chart width="400" height="250" chart-data="data" color="whitesmoke"></flat-chart>
+            </div>
         </div>
     </div>
 </body>

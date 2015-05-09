@@ -45,5 +45,7 @@ Now you can start using directive
 
 
 ```html
-<flat-chart width="400" height="250" chart-data="data" color="whitesmoke"></flat-chart>
+<div ng-controller="DemoController">
+    <flat-chart width="400" height="250" chart-data="data" color="whitesmoke"></flat-chart>
+</div>
 ```
