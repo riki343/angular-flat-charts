@@ -9,8 +9,8 @@ Copyright (C) 2015, Vladislav Kosko <vladislav.kosko@gmail.com>.
 Include angular-flat-charts.js in your application.
 
 ```html
+<link href="../src/angular-flow-chart.css" />
 <script src="../src/angular-flat-charts.js"></script>
-<link href="../src/angular-flow-chart.css"></link>
 ```
 
 Add the module `angularFlatCharts` as a dependency to your app module:
