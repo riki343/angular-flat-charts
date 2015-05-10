@@ -7,7 +7,8 @@
 
 var angularFlowCharts = angular.module('angularFlatCharts', []);
 
-angularFlowCharts.directive('flatChart', function () {
+angularFlowCharts.directive('flatChart',
+    function () {
         return {
             'restrict': 'AE',
             'scope': { chartData: '=' },
@@ -120,35 +121,39 @@ angularFlowCharts.directive('flatChart', function () {
                         rectCoords.y = point.relY + (heightOnePercent * 2);
                         rectCoords.offsetX = widthOnePercent * 7;
                         rectCoords.offsetY = heightOnePercent * 10;
+                        rectCoords.textX = rectCoords.x + widthOnePercent * 2;
+                        rectCoords.textY = rectCoords.y + heightOnePercent * 6;
                     } else if (point.relX > halfWidth + offsetX && point.relY <= halfHeight + offsetY) {
                         rectCoords.x = point.relX - (widthOnePercent * 2);
                         rectCoords.y = point.relY + (heightOnePercent * 2);
                         rectCoords.offsetX = -widthOnePercent * 7;
                         rectCoords.offsetY = heightOnePercent * 10;
+                        rectCoords.textX = rectCoords.x - widthOnePercent * 5;
+                        rectCoords.textY = rectCoords.y + heightOnePercent * 6;
                     } else if (point.relX <= halfWidth + offsetX && point.relY > halfHeight + offsetY) {
                         rectCoords.x = point.relX + (widthOnePercent * 2);
                         rectCoords.y = point.relY - (heightOnePercent * 2);
                         rectCoords.offsetX = widthOnePercent * 7;
                         rectCoords.offsetY = -heightOnePercent * 10;
+                        rectCoords.textX = rectCoords.x + widthOnePercent * 3;
+                        rectCoords.textY = rectCoords.y - heightOnePercent * 4;
                     } else if (point.relX > halfWidth + offsetX && point.relY > halfHeight + offsetY) {
                         rectCoords.x = point.relX - (widthOnePercent * 2);
                         rectCoords.y = point.relY - (heightOnePercent * 2);
                         rectCoords.offsetX = -widthOnePercent * 7;
                         rectCoords.offsetY = -heightOnePercent * 10;
+                        rectCoords.textX = rectCoords.x - widthOnePercent * 4;
+                        rectCoords.textY = rectCoords.y - heightOnePercent * 4;
                     }
-
-                    rectCoords.textX = rectCoords.x + (rectCoords.offsetX / 2);
-                    rectCoords.textY = rectCoords.y + (rectCoords.offsetY / 2);
 
                     return rectCoords;
                 }
 
-                function drawPointInfo(canvas, finded, mousePosition) {
+                function drawPointInfo(canvas, finded) {
                     var canvasCtx = canvas.getContext('2d');
                     var widthOnePercent = width / 100;
-                    var heightOnePercent = height / 100;
 
-                    // Draw stroke circle around the point with radius 2% of width
+                    // Draw circle around the point with radius 2% of width
                     canvasCtx.beginPath();
                     canvasCtx.arc(finded.relX, finded.relY, widthOnePercent * 2, 0, 2 * Math.PI, false);
                     canvasCtx.strokeStyle = color;
@@ -170,7 +175,8 @@ angularFlowCharts.directive('flatChart', function () {
 
                 canvas.width = parseInt($attrs.width);
                 canvas.height = parseInt($attrs.height);
-                var data = ConvertToRelativeCoordinates($scope.chartData);
+                var data = new Object($scope.chartData);
+                data = ConvertToRelativeCoordinates(data);
                 DrawChart(canvas, data, false);
 
                 canvas.addEventListener('mousemove', function ($event) {
@@ -187,7 +193,7 @@ angularFlowCharts.directive('flatChart', function () {
                     // Drawing of point and tooltip if we are in the same position as the point of axis X
                     var finded = checkPointInArray(data, mousePosition.x);
                     if (finded) {
-                        drawPointInfo(canvas, finded, mousePosition);
+                        drawPointInfo(canvas, finded);
                     }
 
                     // Drawing of vertical line that indicates current position of axis X
